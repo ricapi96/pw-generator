@@ -7,12 +7,24 @@ var numbers = ["0","1","2","3","4","5","6","7","8","9"];
 // function for logic and prompts
 function generatePassword() {
     // logic here for prompts
+
+    // ask user how many characters they want in password
     var length = parseInt(
     prompt('How many characters would you like in your password?'));
+    // Check that password is a number, else return null
   if (Number.isNaN(length)) {
     alert('Password length must be a number');
     return null;
-  } 
+  }
+  // Check that password is between 8-126 character length, else return null
+  if (length < 8) {
+    alert('Password must be between 8-126 characters');
+    return null; 
+  }
+  if (length > 126) {
+    alert('Password must be between 8-126 characters');
+    return null;
+  }
 }
 
 
