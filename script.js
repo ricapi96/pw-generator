@@ -26,20 +26,20 @@ function userOptions() {
     return null;
   }
   // ask User to confirm which characters to include in password
-  var specialChar = confirm('Click OK if you would like special characters.');
+  var specialChars = confirm('Click OK if you would like special characters.');
 
-  var lowerChar = confirm('Click OK if you would like lowercase characters.');
+  var lowerChars = confirm('Click OK if you would like lowercase characters.');
 
-  var upperChar = confirm('Click Ok if you would like uppercase characters.');
+  var upperChars = confirm('Click Ok if you would like uppercase characters.');
 
-  var numberChar = confirm('Click OK if you would like numbers.');
+  var numberChars = confirm('Click OK if you would like numbers.');
 
   // Conditional statment to check if user doesn't select any of the types of characters. If all four variable evaluate to false, then program ends
   if ( 
-    specialChar === false &&
-    lowerChar === false &&
-    upperChar === false &&
-    numberChar === false) 
+    specialChars === false &&
+    lowerChars === false &&
+    upperChars === false &&
+    numberChars === false) 
     {
       alert('You must select at least one character type');
       return null;
@@ -48,10 +48,10 @@ function userOptions() {
   // Object to store user input
   var pwOptions = {
     length: length,
-    specialChar: specialChar,
-    lowerChar: lowerChar,
-    upperChar: upperChar,
-    numberChar: numberChar
+    specialChars: specialChars,
+    lowerChars: lowerChars,
+    upperChars: upperChars,
+    numberChars: numberChars
   };
 
   return pwOptions;
@@ -65,9 +65,65 @@ function setRandom(array) {
   return randomElement;
 }
 
+// Function to generate password with user's input
+function generatePassword() {
+  var options = userOptions();
+  // Variable to store password as it's being concatenated
+  var result = [];
+
+  // Array to store types of characters to include in password
+  var possibleChars = [];
+
+  // Array to contain one of each type of chosen characters to ensure each will be used
+  var guaranteedChars = [];
+
+  // Check if an options object exists, if not exit function
+  if (!options) return null;
+
+  // Conditional statement that adds array of special characters into array of possible characters based on user's input
+  // Push new random special character into guaranteedChars
+  if (options.specialChars) {
+    possibleChars = possibleChars.concat(special);
+    guaranteedChars.push(setRandom(special));
+  }
+   // Conditional statement that adds array of lowercase characters into array of possible characters based on user's input
+  // Push new random lowercase character into guaranteedChars
+  if (options.lowerChars) {
+    possibleChars = possibleChars.concat(lowerCase);
+    guaranteedChars.push(setRandom(lowerCase));
+  }
+  // Conditional statement that adds array of uppercase characters into array of possible characters based on user's input
+  // Push new random uppercase character into guaranteedChars
+  if (options.upperChars) {
+    possibleChars = possibleChars.concat(upperCase);
+    guaranteedChars.push(setRandom(upperCase));
+  }
+  // Conditional statement that adds array of number characters into array of possible characters based on user's input
+  // Push new random number character into guaranteedChars
+  if (options.numberChars) {
+    possibleChars = possibleChars.concat(numbers);
+    guaranteedChars.push(setRandom(numbers));
+  }
+
+   // For loop to iterate over the password length from the options object, selecting random indices from the array of possible characters and concatenating those characters into the result variable
+  for (var i = 0; i < options.length; i++) {
+    var possibleCharacter = setRandom(possibleChars);
+
+    result.push(possibleCharacter);
+  }
+
+  // Mix in at least one of each guaranteed character in the result
+  for (var i = 0; i < guaranteedChars.length; i++) {
+    result[i] = guaranteedChars[i];
+  }
+
+  // Transform the result into a string and pass into writePassword
+  return result.join('');
+}
 
 
 // Assignment Code
+// Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
@@ -76,7 +132,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
