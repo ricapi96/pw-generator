@@ -2,7 +2,7 @@
 
 ## Description
 
-Simple Password Generator App built with HTML, CSS, and JavaScript. Randomly generates a strong passowrd that provides greater security.
+Simple Password Generator App built with HTML, CSS, and JavaScript. Randomly generates a strong password that provides greater security.
 
 ## Table of Contents 
 * [Description](#description)
